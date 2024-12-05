@@ -2,6 +2,42 @@
 CREATE DATABASE RestaurantManagement;
 USE RestaurantManagement;
 
+-- Table pour les catégories de recettes
+CREATE TABLE CategoriesRecettes (
+    CategorieID INT AUTO_INCREMENT PRIMARY KEY,
+    NomCategorie VARCHAR(100) NOT NULL -- Exemple : Entrée, Plat, Dessert
+);
+
+-- Table pour les recettes
+CREATE TABLE Recettes (
+    RecetteID INT AUTO_INCREMENT PRIMARY KEY,
+    NomRecette VARCHAR(100) NOT NULL,
+    CategorieID INT NOT NULL, -- Lien vers la catégorie
+    NombrePersonnes INT NOT NULL,
+    TempsPreparation TIME NOT NULL, -- Temps de préparation en heures:minutes:secondes
+    TempsCuisson TIME,
+    TempsRepos TIME,
+    FOREIGN KEY (CategorieID) REFERENCES CategoriesRecettes(CategorieID)
+);
+
+-- Table pour les ingrédients des recettes
+CREATE TABLE IngredientsRecettes (
+    IngredientID INT AUTO_INCREMENT PRIMARY KEY,
+    RecetteID INT NOT NULL, -- Lien vers la recette
+    NomIngredient VARCHAR(100) NOT NULL,
+    Quantite VARCHAR(50), -- Exemple : "200g", "2 cuillères"
+    FOREIGN KEY (RecetteID) REFERENCES Recettes(RecetteID)
+);
+
+-- Table pour les étapes des recettes
+CREATE TABLE EtapesRecettes (
+    EtapeID INT AUTO_INCREMENT PRIMARY KEY,
+    RecetteID INT NOT NULL, -- Lien vers la recette
+    OrdreEtape INT NOT NULL, -- Numéro de l'étape
+    DescriptionEtape TEXT NOT NULL, -- Description détaillée de l'étape
+    FOREIGN KEY (RecetteID) REFERENCES Recettes(RecetteID)
+);
+
 -- Table pour les employés
 CREATE TABLE Employes (
     EmployeID INT AUTO_INCREMENT PRIMARY KEY,
@@ -83,23 +119,6 @@ CREATE TABLE Equipements (
     Localisation ENUM('Cuisine', 'Salle') NOT NULL
 );
 
--- Table pour les recettes
-CREATE TABLE Recettes (
-    RecetteID INT AUTO_INCREMENT PRIMARY KEY,
-    NomRecette VARCHAR(100) NOT NULL,
-    EtapesPreparation TEXT NOT NULL,
-    TempsPreparation TIME NOT NULL -- Temps de préparation en heures:minutes:secondes
-);
-
--- Table pour les étapes des recettes
-CREATE TABLE EtapesRecettes (
-    EtapeID INT AUTO_INCREMENT PRIMARY KEY,
-    RecetteID INT NOT NULL,
-    DescriptionEtape TEXT NOT NULL,
-    OrdreEtape INT NOT NULL, -- Numéro de l'étape
-    FOREIGN KEY (RecetteID) REFERENCES Recettes(RecetteID)
-);
-
 -- Suivi des tâches (logs des flux d'activités)
 CREATE TABLE LogsTaches (
     TacheID INT AUTO_INCREMENT PRIMARY KEY,
@@ -110,7 +129,7 @@ CREATE TABLE LogsTaches (
 );
 
 -- Table pour les ingrédients (relier recettes et stocks)
-CREATE TABLE Ingredients (
+CREATE TABLE IngredientsInventaire (
     IngredientID INT AUTO_INCREMENT PRIMARY KEY,
     RecetteID INT NOT NULL,
     ProduitID INT NOT NULL, -- Lien vers la table Inventaire
