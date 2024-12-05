@@ -11,7 +11,9 @@ VALUES
 ('Feuilleté au crabe', 1, 4, '00:10:00', '00:20:00', NULL),
 ('Tiramisu', 3, 4, '00:10:00', NULL, '01:00:00'),
 ('Blanquette de veau', 2, 5, '00:10:00', '02:00:00', NULL),
-('Quiche Lorraine', 1, 6, '00:15:00', '00:35:00', NULL);
+('Quiche Lorraine', 1, 6, '00:15:00', '00:35:00', NULL),
+('Soupe à l’oignon', 1, 4, '00:20:00', '00:30:00', NULL),
+('Mousse au chocolat', 3, 4, '00:15:00', NULL, '00:45:00');
 
 -- Insertion des ingrédients pour les recettes
 INSERT INTO IngredientsRecettes (RecetteID, NomIngredient, Quantite)
@@ -31,7 +33,14 @@ VALUES
 (4, 'Lardons fumés', '300g'),
 (4, 'Crème fraîche', '30cl'),
 (4, 'Pâte feuilletée', '1 rouleau'),
-(4, 'Emmental râpé', '150g');
+(4, 'Emmental râpé', '150g'),
+(5, 'Oignons', '500g'),
+(5, 'Bouillon de bœuf', '1 litre'),
+(5, 'Pain', '6 tranches'),
+(5, 'Gruyère râpé', '150g'),
+(6, 'Chocolat noir', '200g'),
+(6, 'Crème liquide', '25cl'),
+(6, 'Oeufs', '4');
 
 -- Insertion des étapes pour les recettes
 INSERT INTO EtapesRecettes (RecetteID, OrdreEtape, DescriptionEtape)
@@ -47,14 +56,25 @@ VALUES
 (3, 3, 'Ajouter la crème en fin de cuisson'),
 (4, 1, 'Précuire la pâte feuilletée'),
 (4, 2, 'Préparer un mélange avec les œufs, la crème et le lait'),
-(4, 3, 'Ajouter les lardons sur la pâte, verser le mélange, et cuire 35 minutes à 180°');
+(4, 3, 'Ajouter les lardons sur la pâte, verser le mélange, et cuire 35 minutes à 180°'),
+(5, 1, 'Faire revenir les oignons dans du beurre jusqu’à caramélisation'),
+(5, 2, 'Ajouter le bouillon de bœuf et laisser mijoter 30 minutes'),
+(5, 3, 'Servir dans des bols avec une tranche de pain et du gruyère râpé, gratiner au four'),
+(6, 1, 'Faire fondre le chocolat avec la crème liquide'),
+(6, 2, 'Incorporer les jaunes d’œufs'),
+(6, 3, 'Monter les blancs en neige et les ajouter délicatement');
 
--- Insertion des employés
+-- Insertion des employés (tous les rôles sont couverts)
 INSERT INTO Employes (NomEmploye, Role, Salaire, HoraireEmploye, SecteurID)
 VALUES
-('Jean Dupont', 'ChefCuisine', 2500.00, 'Matin', NULL),
-('Marie Curie', 'Serveur', 1800.00, 'Soir', NULL),
-('Paul Martin', 'MaitreHotel', 3000.00, 'Matin', 1);
+('Joseph Emmanuel', 'ChefCuisine', 2500.00, 'Matin', NULL),
+('Schilt Erwan', 'Serveur', 1800.00, 'Soir', NULL),
+('Ngandette Davila', 'MaitreHotel', 3000.00, 'Matin', 1),
+('Kendrick Lamar', 'ChefRang', 2200.00, 'Soir', 1),
+('Dr Dre', 'CommisCuisine', 1500.00, 'Matin', NULL),
+('Johana Aricie', 'CommisSalle', 1400.00, 'Soir', 1),
+('David Lance', 'Plongeur', 1300.00, 'Matin', NULL),
+('Joao Félix', 'ChefPartie', 2400.00, 'Matin', NULL);
 
 -- Insertion des secteurs
 INSERT INTO Secteurs (NomSecteur, NombreDeTables)
@@ -86,7 +106,8 @@ INSERT INTO Inventaire (NomProduit, Categorie, Quantite, DateExpiration)
 VALUES
 ('Farine', 'LongueConservation', 50, '2025-01-01'),
 ('Oeufs', 'Frais', 200, '2024-12-10'),
-('Beurre', 'Frais', 30, '2024-12-08');
+('Beurre', 'Frais', 30, '2024-12-08'),
+('Gruyère râpé', 'Frais', 50, '2024-12-15');
 
 -- Insertion des commandes
 INSERT INTO Commandes (TableID, HeureCommande, Statut)
